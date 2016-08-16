@@ -6,11 +6,11 @@
 /**
  * Homepage
  */
-var homepage = "@@@TOKEN-HOMEPAGE@@@";
+var homepage = "cpsv-ap_validator.html";
 /**
  * CAT-AP server cookie name
  */
-var servercookiename = "@@@TOKEN-SERVERCOOKIENAME@@@";
+var servercookiename = "cpsv-ap";
 
 /**
  * Set the result message
@@ -60,7 +60,7 @@ $(document).ready(function () {
         if ($anchor.length) {
             text = $cell.text().trim();
             query = 'SELECT (<' + text + '> AS ?Subject) ?Predicate ?Object WHERE { GRAPH <' + graph + '> {<' + text + '> ?Predicate ?Object }}';
-            query_param = '&output=xml&stylesheet=/xml-to-html-cpsv-ap.xsl';
+            query_param = '&output=xml&xslt-uri=/cpsv-ap_validator/xml-to-html-cpsv-ap.xsl';
             link = '<a href="?query=' + encodeURIComponent(query) + query_param + '">' + text + '</a>';
             $(this).html(link);
         }
