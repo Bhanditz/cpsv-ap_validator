@@ -26,7 +26,7 @@
 					</ul>
 					<div id="tab-1">
 						<form id="tab1form" class="form" action="#" method="POST" accept-charset="UTF-8" onsubmit="return onForm1Submit(this)">
-							<label for="metadatafile">RDF file(s):<span class="small">Select your RDF file (Turtle/XML/N-triples/JSON-LD) with metadata and taxonomies</span></label>
+							<label for="metadatafile">RDF file(s):<span class="small">Select your RDF file (Turtle/XML) with metadata and taxonomies</span></label>
 							<input id="metadatafile" class="metadatafile" type="file" name="metadatafile" multiple="multiple">
                             <span id="metadatafileerror" class="errormessage"></span>
 							<div id="tab1options">
@@ -38,7 +38,7 @@
 									<label for="tab1endpoint">SPARQL endpoint:<span class="small">Set the SPARQL endpoint</span></label>
 									<input id="tab1endpoint" name="endpoint" value="" size="40" />
                                     <span id="tab1endpointerror" class="errormessage"></span>
-									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="stylesheet" value="/xml-to-html-cpsv-ap.xsl" />
+									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="stylesheet" value="xml-to-html-cpsv-ap.xsl" />
 									<label for="tab1validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
 									<textarea class="validationquery" id="tab1validationquery" name="query" cols="80" rows="16"></textarea>
                                     <span id="editortab1error" class="errormessage"></span>
@@ -51,7 +51,7 @@
 					</div>
 					<div id="tab-2">
 						<form id="tab2form" class="form" action="#" method="POST" accept-charset="UTF-8" onsubmit="return onForm2Submit(this)">
-							<label for="address">Address:<span class="small">Enter the address of your RDF file (Turtle/XML/N-triples/JSON-LD)</span></label>
+							<label for="address">Address:<span class="small">Enter the address of your RDF file (Turtle/XML)</span></label>
 							<input id="address" class="address" type="text" name="address" size="45">
                             <span id="addresserror" class="errormessage"></span>
 							<div id="tab2options">
@@ -84,8 +84,8 @@
 							<div class="loadsamples">
 								<div class="buttonsample" id="loadsample1">&lt;- Load <span>Turtle</span> sample</div>
 								<div class="buttonsample" id="loadsample2">&lt;- Load <span>XML</span> sample</div>
-								<div class="buttonsample" id="loadsample3">&lt;- Load <span>N-triples</span> sample</div>
-								<div class="buttonsample" id="loadsample4">&lt;- Load <span>JSON-LD</span> sample</div>
+								<!--<div class="buttonsample" id="loadsample3">&lt;- Load <span>N-triples</span> sample</div>
+								<div class="buttonsample" id="loadsample4">&lt;- Load <span>JSON-LD</span> sample</div>-->
 							</div>
 							<div id="tab3options">
 								<div class="more"><img class="toggleicon" src="images/arrow-closed.png" alt="Hide Options"/> <span class="menu">More Options</span></div>
@@ -96,7 +96,9 @@
 									<label for="tab3endpoint">SPARQL endpoint:<span class="small">Set the SPARQL endpoint</span></label>
 									<input id="tab3endpoint" name="endpoint" value="" size="40" />
                                     <span id="tab3endpointerror" class="errormessage"></span>
-									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="stylesheet" value="/xml-to-html-cpsv-ap.xsl" />
+									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="xslt-uri" value="/cpsv-ap_validator/xml-to-html-cpsv-ap.xsl" />
+									<input type="hidden" name="default-graph-uri" value="" />
+									<input type="hidden" name="named-graph-uri" value="" />
 									<label for="tab3validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
 									<textarea class="validationquery" id="tab3validationquery" name="query" cols="80" rows="16"></textarea>
                                     <span id="editortab3error" class="errormessage"></span>
@@ -122,12 +124,12 @@
 		</div>
 		<script type="text/javascript" charset="utf-8" src="js/DataTables-1.10.7/media/js/jquery.js"></script>
         <script type="text/javascript" src="js/js-cookie/js-cookie.js"></script>
-        <!--
+
         <script type="text/javascript" src="js/jquery-ui/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/codemirror/codemirror-compressed.js"></script>
         <script type="text/javascript" src="js/cpsv-ap/cpsv-ap_validator.js"></script>
-        -->
+        
              
-		<script type="text/javascript" src="js/concat/cpsv.js"></script>
+		<!-- <script type="text/javascript" src="js/concat/cpsv.js"></script> -->
 	</body>
 </html>

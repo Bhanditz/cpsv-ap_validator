@@ -7,47 +7,47 @@
 /**
  * SPARQL Endpoint url
  */
-var sparqlEndpoint = "@@@TOKEN-ENDPOINT@@@";
+var sparqlEndpoint = "cpsv-ap_validator";
 /**
  * Homepage
  */
-var homepage = "@@@TOKEN-HOMEPAGE@@@";
+var homepage = "cpsv-ap_validator.html";
 /**
  * CPSV-AP server host
  */
-var serverhost = "@@@TOKEN-SERVERHOST@@@";
+var serverhost = "localhost";
 /**
  * CPSV-AP server port
  */
-var serverport = "@@@TOKEN-SERVERPORT@@@";
+var serverport = "3000";
 /**
  * CPSV-AP server cookie days
  */
-var servercookiedays = @@@TOKEN-SERVERCOOKIEDAYS@@@;
+var servercookiedays = 1;
 /**
  * CPSV-AP server cookie name
  */
-var servercookiename = "@@@TOKEN-SERVERCOOKIENAME@@@";
+var servercookiename = "cpsv-ap";
 /**
  * CPSV-AP query file
  */
-var queryfile = "@@@TOKEN-QUERYFILE@@@";
+var queryfile = "cpsv-ap.txt";
 /**
  * CPSV-AP sample ttl file
  */
-var samplettlfile = "@@@TOKEN-SAMPLETTLFILE@@@";
+var samplettlfile = "samples/sample-turtle.ttl";
 /**
  * CPSV-AP sample rdf file
  */
-var samplerdffile = "@@@TOKEN-SAMPLERDFFILE@@@";
+var samplerdffile = "samples/sample-xml.rdf";
 /**
  * CPSV-AP sample nt file
  */
-var samplentfile = "@@@TOKEN-SAMPLENTFILE@@@";
+var samplentfile = "samples/sample-n-triples.nt";
 /**
  * CPSV-AP sample rdf file
  */
-var samplejsonldfile = "@@@TOKEN-SAMPLEJSONLDFILE@@@";
+var samplejsonldfile = "samples/sample-json-ld.jsonld";
 
 /**
  * Instances of the Codemirror used in the tabs.
@@ -152,6 +152,23 @@ function runUpdateQuery(query, endpoint) {
     xmlhttp.send('update=' + encodeURIComponent(query));
 }
 
+function runUpdateQuery2(query, endpoint) {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status !== 200) {
+            alert(xmlhttp.status + ' ' + xmlhttp.statusText);
+        }
+    };
+    xmlhttp.open("POST", endpoint + "", false); // must be false for casperjs tests
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=UTF-8;');
+    xmlhttp.send('query=' + encodeURIComponent(query));
+}
+
 /**
  * Deletes a graph
  * @param {string} graph - Graph to be deleted.
@@ -161,7 +178,7 @@ function deleteGraph(graph, endpoint) {
     if (graph === 'default') {
         runUpdateQuery('CLEAR DEFAULT', endpoint); //wipes the default graph in the triple store
     } else {
-        runUpdateQuery('CLEAR GRAPH <' + graph + '>', endpoint); //wipes the named graph in the triple store
+        runUpdateQuery2('DELETE FROM <' + graph + '> { ?s ?p ?o.} WHERE { GRAPH <' + graph + '> { ?s ?p ?o.} }', endpoint); //wipes the named graph in the triple store
     }
 }
 
@@ -396,11 +413,11 @@ function getBaseURL() {
 function stringToBlob(inputString) {
     var blob;
     if (pattern_xml.test(inputString)) {
-        blob = new Blob([inputString], {type: "text\/xml"});
+        blob = new Blob([inputString], {type: "application/rdf+xml"});
     } else if (pattern_turtle.test(inputString)) {
         blob = new Blob([inputString], {type: "text\/turtle"});
     } else if (pattern_json_ld.test(inputString)) {
-        blob = new Blob([inputString], {type: "application\/ld+json"});
+        blob = new Blob([inputString], {type: "application\/json"});
     } else if (pattern_n3.test(inputString)) {
         blob = new Blob([inputString], {type: "application\/n-triples"});
     }
@@ -492,7 +509,7 @@ function onForm1Submit(form) {
                     uploadFile(file, localgraph, endpoint); //uploads the metadata file
                 }
             }
-            form.action = endpoint + '/query'; //The validation query will be called from the form
+            form.action = '/sparql'; //The validation query will be called from the form
             return true;
             //}
         } catch (e) {
@@ -522,7 +539,7 @@ function onForm2Submit(form) {
             //file = getFileFromURL(fileURL);
             //getAndLoadFile(fileURL,form); //uploads the metadata file
             callWebService(fileURL, localgraph, endpoint);
-            form.action = endpoint + '/query'; //The validation query will be called from the form
+            form.action = '/sparql'; //The validation query will be called from the form
             return true;
             //}
         } catch (e) {
@@ -532,6 +549,25 @@ function onForm2Submit(form) {
         return true;
     }
     return false;
+}
+
+function uploadFile3(file, graph, endpoint,query) {
+    var xmlhttp, formData;
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && (xmlhttp.status !== 201)) {
+            alert(xmlhttp.status + ' ' + xmlhttp.statusText);
+        }
+    };
+    //formData = new FormData();
+    //formData.append('query', query);
+    //formData.append('body', file);
+    xmlhttp.open('PUT', endpoint + "?graph-uri="+graph, false);
+    xmlhttp.send(file);
 }
 
 /**
@@ -551,8 +587,8 @@ function onForm3Submit(form) {
             //getAndLoadFile(admssw_schema); //gets the schema file from the webserver and loads it into the triple store
             //See https://jena.apache.org/documentation/io/rdf-input.html
             blob = stringToBlob(directfile);
-            uploadFile(blob, localgraph, endpoint);
-            form.action = endpoint + '/query'; //The validation query will be called from the form
+            uploadFile3(blob, localgraph, endpoint,editortab3.getValue());
+            form.action = '/sparql'; //The validation query will be called from the form
             return true;
         } catch (e) {
             alert('Error: ' + e.message);
