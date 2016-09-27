@@ -38,8 +38,10 @@
 									<label for="tab1endpoint">SPARQL endpoint:<span class="small">Set the SPARQL endpoint</span></label>
 									<input id="tab1endpoint" name="endpoint" value="" size="40" />
                                     <span id="tab1endpointerror" class="errormessage"></span>
-									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="stylesheet" value="xml-to-html-cpsv-ap.xsl" />
-									<label for="tab1validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
+									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="xslt-uri" value="/cpsv-ap_validator/xml-to-html-cpsv-ap.xsl" />
+                                                                        <input type="hidden" name="default-graph-uri" value="" />
+                                                                        <input type="hidden" name="named-graph-uri" value="" />									
+                                                                        <label for="tab1validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
 									<textarea class="validationquery" id="tab1validationquery" name="query" cols="80" rows="16"></textarea>
                                     <span id="editortab1error" class="errormessage"></span>
 								</div>
@@ -63,8 +65,10 @@
 									<label for="tab2endpoint">SPARQL endpoint:<span class="small">Set the SPARQL endpoint</span></label>
 									<input id="tab2endpoint" name="endpoint" value="" size="40" />
                                     <span id="tab2endpointerror" class="errormessage"></span>
-									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="stylesheet" value="/xml-to-html-cpsv-ap.xsl" />
-									<label for="tab2validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
+									<br/><br/><!--<label>XSLT style sheet:<span class="small">Stylesheet used to display results</span></label> --><input type="hidden" name="xslt-uri" value="cpsv-ap_validator/xml-to-html-cpsv-ap.xsl" />
+                                                                        <input type="hidden" name="default-graph-uri" value="" />
+                                                                        <input type="hidden" name="named-graph-uri" value="" />									
+                                                                        <label for="tab2validationquery">SPARQL query:<span class="small">SPARQL query that encodes the validation rules.</span></label>
 									<textarea class="validationquery" id="tab2validationquery" name="query" cols="80" rows="16"></textarea>
                                     <span id="editortab2error" class="errormessage"></span>
 								</div>

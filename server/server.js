@@ -41,7 +41,7 @@ var sparqlEndpoint = process.argv[7];
 /**
  * BaseURL (for example http://localhost:3030) used to allow connections only from Fuseki
  */
-var baseURL = "http://" + fusekihost + ":" + fusekiport;
+var baseURL = "http://" + fusekihost;
 
 /**
  * defaultEndpoint (for example http://localhost:3030/cpsv-ap_validator) used to drop graph

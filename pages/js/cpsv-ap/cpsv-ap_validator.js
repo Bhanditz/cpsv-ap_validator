@@ -7,15 +7,15 @@
 /**
  * SPARQL Endpoint url
  */
-var sparqlEndpoint = "cpsv-ap_validator";
+var sparqlEndpoint = "sparql-graph-crud";
 /**
  * Homepage
  */
-var homepage = "cpsv-ap_validator.html";
+var homepage = "cpsv-ap_validator/";
 /**
  * CPSV-AP server host
  */
-var serverhost = "localhost";
+var serverhost = "52.50.205.146";
 /**
  * CPSV-AP server port
  */
@@ -99,7 +99,7 @@ function uploadFile(file, graph, endpoint) {
     formData = new FormData();
     formData.append('graph', graph);
     formData.append('file', file);
-    xmlhttp.open('POST', endpoint + "/upload", false);
+    xmlhttp.open('POST', endpoint, false);
     xmlhttp.send(formData);
 }
 
@@ -448,7 +448,7 @@ function callWebService(fileURL, graph, endpoint) {
         } else if (this.readyState === 4 && this.status === 200) {
             //alert(this.readyState + ' HTTP' + this.status + ' ' + this.statusText + this.responseText);
             blob = stringToBlob(this.responseText);
-            uploadFile(blob, graph, endpoint);
+            uploadFile3(blob, graph, endpoint,editortab2.getValue());
         }
     };
     //xmlhttp.responseType = "text"; //text,document,arraybuffer, IE11 doesn't like it
@@ -497,16 +497,16 @@ function onForm1Submit(form) {
             fileInput = document.getElementById('metadatafile');
             endpoint = document.getElementById('tab1endpoint').value;
             localgraph = getGraphFromCookie();
-            deleteGraph(localgraph, endpoint);
+            deleteGraph(localgraph, "http://52.50.205.146/sparql");
             //getAndLoadFile(admssw_taxonomies); //gets the taxonomies from the webserver and loads it into the triple store
             //getAndLoadFile(admssw_schema); //gets the schema file from the webserver and loads it into the triple store
             for (i = 0; i < fileInput.files.length; i = i + 1) {
                 file = fileInput.files[i];
                 if (file.name.endsWith("json") || file.name.endsWith("jsonld")) {
                     blob = new Blob([file], {type: "application/ld+json"});
-                    uploadFile(blob, localgraph, endpoint);
+                    uploadFile3(blob, localgraph, endpoint,editortab1.getValue());
                 } else {
-                    uploadFile(file, localgraph, endpoint); //uploads the metadata file
+                    uploadFile3(file, localgraph, endpoint,editortab1.getValue()); //uploads the metadata file
                 }
             }
             form.action = '/sparql'; //The validation query will be called from the form
@@ -533,7 +533,7 @@ function onForm2Submit(form) {
             fileURL = document.getElementById('address').value;
             endpoint = document.getElementById('tab2endpoint').value;
             localgraph = getGraphFromCookie();
-            deleteGraph(localgraph, endpoint);
+            deleteGraph(localgraph, "http://52.50.205.146/sparql");
             //getAndLoadFile(admssw_taxonomies); //gets the taxonomies from the webserver and loads it into the triple store
             //getAndLoadFile(admssw_schema); //gets the schema file from the webserver and loads it into the triple store
             //file = getFileFromURL(fileURL);
@@ -560,13 +560,13 @@ function uploadFile3(file, graph, endpoint,query) {
     }
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4 && (xmlhttp.status !== 201)) {
-            alert(xmlhttp.status + ' ' + xmlhttp.statusText);
+            //alert(xmlhttp.status + ' ' + xmlhttp.statusText);
         }
     };
     //formData = new FormData();
     //formData.append('query', query);
     //formData.append('body', file);
-    xmlhttp.open('PUT', endpoint + "?graph-uri="+graph, false);
+    xmlhttp.open('POST', endpoint + "?graph-uri="+graph, false);
     xmlhttp.send(file);
 }
 
@@ -582,7 +582,7 @@ function onForm3Submit(form) {
             directfile = filterInput(editor.getValue());
             endpoint = document.getElementById('tab3endpoint').value;
             localgraph = getGraphFromCookie();
-            deleteGraph(localgraph, endpoint);
+            deleteGraph(localgraph, "http://52.50.205.146/sparql");
             //getAndLoadFile(admssw_taxonomies); //gets the taxonomies from the webserver and loads it into the triple store
             //getAndLoadFile(admssw_schema); //gets the schema file from the webserver and loads it into the triple store
             //See https://jena.apache.org/documentation/io/rdf-input.html

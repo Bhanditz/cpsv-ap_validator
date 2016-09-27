@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 
@@ -128,7 +127,7 @@ URIs as hrefs in results : Bob DuCharme & Andy Seaborne
 
   <xsl:template match="res:literal[@datatype]">
 	<!-- datatyped literal value -->
-    <xsl:value-of select="."/><!--"^^&lt;<xsl:value-of select="@datatype"/>&gt; -->
+    <xsl:value-of select="."/>
   </xsl:template>
 
   <xsl:template match="res:literal[@lang]">
@@ -172,7 +171,7 @@ URIs as hrefs in results : Bob DuCharme & Andy Seaborne
       </head>
       <body>
 	  <header class="banner">
-	  <a id="logobanner" href="#"><img src="/cpsv-ap_validator/images/CPSV-AP_logo.png" width="70" height="70" alt="CPSV-AP_logo" /><h1>CPSV-AP Validator: SPARQL Query Result</h1></a>
+	  <a id="logobanner" href="/cpsv-ap_validator/"><img src="/cpsv-ap_validator/images/CPSV-AP_logo.png" width="70" height="70" alt="CPSV-AP_logo" /><h1>CPSV-AP Validator: SPARQL Query Result</h1></a>
 	  </header>
 	  <p id="description">The table below displays all detected anomalies (if any).</p>
 

@@ -6,7 +6,7 @@
 /**
  * Homepage
  */
-var homepage = "cpsv-ap_validator.html";
+var homepage = "cpsv-ap_validator/";
 /**
  * CAT-AP server cookie name
  */
